@@ -17,7 +17,6 @@ Kickstart.nvim is a template for your own configuration.
   a guide. One possible example:
   - https://learnxinyminutes.com/docs/lua/
 
-
   And then you can explore or search through `:help lua-guide`
   - https://neovim.io/doc/user/lua-guide.html
 
@@ -85,7 +84,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -109,7 +108,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} }, --Only want this for the moment
+  { 'folke/which-key.nvim',  opts = {} }, --Only want this for the moment
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -127,16 +126,16 @@ require('lazy').setup({
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
-        vim.keymap.set({'n', 'v'}, ']c', function()
+        vim.keymap.set({ 'n', 'v' }, ']c', function()
           if vim.wo.diff then return ']c' end
           vim.schedule(function() gs.next_hunk() end)
           return '<Ignore>'
-        end, {expr=true, buffer = bufnr, desc = "Jump to next hunk"})
-        vim.keymap.set({'n', 'v'}, '[c', function()
+        end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
+        vim.keymap.set({ 'n', 'v' }, '[c', function()
           if vim.wo.diff then return '[c' end
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
-        end, {expr=true, buffer = bufnr, desc = "Jump to previous hunk"})
+        end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
       end,
     },
   },
@@ -145,7 +144,7 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-     vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'onedark'
     end,
   },
 
@@ -274,7 +273,7 @@ vim.o.termguicolors = true
 
 --Terminal keymaps
 --    open terminal (requires toggleTerm)
-vim.keymap.set('n', '<leader>t', ':ToggleTerm<CR>', { silent =true, desc = 'Open terminal'})
+vim.keymap.set('n', '<leader>t', ':ToggleTerm<CR>', { silent = true, desc = 'Open terminal' })
 --    close terminal
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { silent = true })
 
@@ -283,7 +282,7 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Delete prev word in insert mode
-vim.keymap.set('i','<C-H>', '<C-W>', { noremap = true })
+vim.keymap.set('i', '<C-H>', '<C-W>', { noremap = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -291,7 +290,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 -- [[Vim-move]]
 --vim.g.move_key_modifier = 'C'
-vim.cmd[[let g:move_key_modifier = 'C']]
+vim.cmd [[let g:move_key_modifier = 'C']]
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -300,7 +299,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = highlight_group, pattern = '*', }) -- [[ Configure Telescope ]] See `:help telescope` and `:help telescope.setup()`
+  group = highlight_group,
+  pattern = '*',
+}) -- [[ Configure Telescope ]] See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -338,10 +339,14 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
+    'java' },
 
+  sync_install = false,
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
+
+  ignore_install = {},
 
   highlight = { enable = true },
   indent = { enable = true },
