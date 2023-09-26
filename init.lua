@@ -225,10 +225,6 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
---Configuration for github copilot to work
-vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -271,8 +267,9 @@ vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 
---Terminal keymaps
 require('custom/keymap/terminal')
+require('custom/keymap/neoTree')
+require('custom/keymap/barbar')
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -336,16 +333,16 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
-    'java' },
+  ensure_installed = "all",
 
   sync_install = false,
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
 
-  ignore_install = {},
+  ignore_install = { "" },
 
   highlight = { enable = true },
+
   indent = { enable = true },
   incremental_selection = {
     enable = true,
